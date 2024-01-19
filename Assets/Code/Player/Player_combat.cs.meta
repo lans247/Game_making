@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0e8769aee2bede2459664a461b61127b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - UI: {instanceID: 0}
+  - HPbar: {instanceID: 0}
+  - HPnum: {instanceID: 0}
+  - attack_image: {fileID: 9037813585929296977, guid: 4e2525336b450bf4983f1694a6182ef0, type: 3}
+  - indicator: {fileID: 2839536848519281639, guid: 9c2ae602b2ef9e1459e964086ed747eb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
