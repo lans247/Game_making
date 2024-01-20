@@ -14,6 +14,10 @@ public class UI : MonoBehaviour
     public GameObject notice; //맵 표시를 위한 객체
 
 
+    public bool BOSS = false;       //보스 있는지 체크
+    public GameObject BOSS_UI;      //보스 UI
+
+
 
     public GameObject player;
 
@@ -51,7 +55,7 @@ public class UI : MonoBehaviour
         notice = transform.GetChild(1).gameObject;             //map표시 및, 알림 설정
         item = player.GetComponent<item_manager>().bag;
 
-        
+        BOSS_UI = transform.Find("BOSS").gameObject;
     }
 
 
@@ -77,6 +81,17 @@ public class UI : MonoBehaviour
         {
             bag_manage();
         }
+
+        if(BOSS)        //보스 있으면
+        {
+            BOSS_UI.SetActive(true);
+        }
+        else
+        {
+            BOSS_UI.SetActive(false);
+        }
+
+        
     }
 
 
