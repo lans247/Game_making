@@ -8,8 +8,7 @@ public class Gate : MonoBehaviour
     [SerializeField]
     Vector2 transfer;
 
-    [SerializeField]
-    string map_name;
+    public map_info map;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,14 +26,9 @@ public class Gate : MonoBehaviour
         if(collision.tag == "Player")
         {
             collision.transform.position = new Vector3(collision.transform.position.x + transfer.x, collision.transform.position.y + transfer.y, 0);
-            collision.GetComponent<Player>().now_map = map_name;            //맵 네임 넘겨주기
+            collision.GetComponent<Player>().now_map = map.map_name;            //맵 네임 넘겨주기
+            collision.GetComponent<Player>().map_range = map.map_range;            //맵 범위 넘겨주기
             GameObject.Find("UI").GetComponent<UI>().map_allert();          //맵 띄어주세요
         }
-
-
-
-
-
-
     }
 }

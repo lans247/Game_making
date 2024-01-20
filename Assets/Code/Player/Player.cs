@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     public float speed = 5.0f;
 
     public string now_map;
-
+    public float[] map_range = new float[4]; //-x, x, -y, x
     
     private void Awake()//이동시 2개 이상이면 제거
     {

@@ -142,8 +142,6 @@ public class UI : MonoBehaviour
 
     public IEnumerator fade_start(string transfer_map, Vector3 position) //fade와 동시에 씬 이동
     {
-        notice.GetComponent<TextMeshProUGUI>().text = transfer_map;         //화면에 이동 맵 정보 뜨기
-
         float alpha = 0f;
         while (alpha < 1.0f)
         {
@@ -154,9 +152,6 @@ public class UI : MonoBehaviour
 
         SceneManager.LoadScene(transfer_map);           //씬 이동
         player.transform.position = position;           //입력된 곳으로 플레이어 이동
-
-        notice.GetComponent<TextMeshProUGUI>().text = string.Empty;         //이동후 맵 정보 끄기
-        
         while (alpha > 0f)
         {
             fade.GetComponent<UnityEngine.UI.Image>().color = new Color(0f, 0f, 0f, alpha);

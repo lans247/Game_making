@@ -1,0 +1,7 @@
+적은 
+
+enemy_info에 정보 입력, enemy_info를 게임오브젝트에 씌워서 완성
+
+item_info에 정보 입력, item_frame에 item_info를 넣어서 게임 오브젝트 완성
+
+map은 이름과 레인지를 gate와 portal에 넣어서 게임 오브젝트 완성
