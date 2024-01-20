@@ -11,7 +11,7 @@ using UnityEngine.UIElements;
 public class UI : MonoBehaviour
 {
     public GameObject fade; //fade in outÀ» À§ÇÑ °´Ã¼
-    public GameObject notice; //Ç¥½Ã¸¦ À§ÇÑ °´Ã¼
+    public GameObject notice; //¸Ê Ç¥½Ã¸¦ À§ÇÑ °´Ã¼
 
 
 
@@ -96,9 +96,36 @@ public class UI : MonoBehaviour
 
 
 
+    public void map_allert()        //¸Ê ¶ç¿ì±â
+    {
+        StopCoroutine("map_allert_act");        //±âÁ¸ ¸Ê ¾Ë¸² ²ô°í
+        StartCoroutine("map_allert_act");       //»õ·Î¿î ¸Ê ¾Ë¸²
+    }
+
+    public IEnumerator map_allert_act()     //¸ã ¾Ë¸²
+    {
+        
+        yield return new WaitForSeconds(1f);
+        notice.GetComponent<TextMeshProUGUI>().text = player.GetComponent<Player>().now_map;
+
+        float alpha = 0f;
+        while(alpha < 1f)
+        {
+            alpha += 0.1f;
+            notice.GetComponent<TextMeshProUGUI>().alpha = alpha;
+            yield return new WaitForSeconds(0.05f);
+        }
+        while(alpha > 0f)
+        {
+            alpha -= 0.1f;
+            notice.GetComponent<TextMeshProUGUI>().alpha = alpha;
+            yield return new WaitForSeconds(0.05f);
+        }
 
 
 
+        yield break;
+    }
 
 
 

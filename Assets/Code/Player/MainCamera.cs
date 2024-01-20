@@ -27,8 +27,12 @@ public class MainCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+
+    Vector3 target_pos;
+    void FixedUpdate()
     {
-        transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, -20f);
+        target_pos = new Vector3(Player.transform.position.x, Player.transform.position.y, -20f) ;
+
+        transform.position = Vector3.Lerp(transform.position, target_pos, Time.deltaTime*2f);
     }
 }

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public float speed = 5.0f;
 
+    public string now_map;
 
     
     private void Awake()//이동시 2개 이상이면 제거
@@ -26,8 +27,14 @@ public class Player : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void FixedUpdate()
+    {
+        move();
+    }
+
+
+    void move()
     {
         float x_move = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
         float y_move = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
@@ -35,11 +42,10 @@ public class Player : MonoBehaviour
 
 
 
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             speed = 10.0f;
         }
         else { speed = 5.0f; }
     }
-
 }
