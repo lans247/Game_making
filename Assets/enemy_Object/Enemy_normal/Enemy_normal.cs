@@ -33,12 +33,12 @@ public class Enemy_normal : MonoBehaviour
         speed = 2;    
         attack_speed = info.attack_speed;       //2가 최고 공속
 
-        HP_bar = transform.GetChild(0).Find("HPbar");         //HP바 받아오기;
+        HP_bar = transform.GetChild(1).Find("HPbar");         //HP바 받아오기;
 
         Player = GameObject.FindWithTag("Player");
         StartCoroutine("random_act");
 
-        transform.GetChild(0).Find("name").GetComponent<TextMeshProUGUI>().text = info.Name;     //이름 표시
+        transform.GetChild(1).Find("name").GetComponent<TextMeshProUGUI>().text = info.Name;     //이름 표시
         GetComponent<SpriteRenderer>().sprite = info.Image;
         
     }

@@ -37,7 +37,7 @@ public class Enemy_boss_slimeking : MonoBehaviour
         Player = GameObject.FindWithTag("Player");
         UI = GameObject.FindWithTag("UI");
 
-        transform.GetChild(0).Find("name").GetComponent<TextMeshProUGUI>().text = info.Name;     //이름 표시
+        transform.GetChild(1).Find("name").GetComponent<TextMeshProUGUI>().text = info.Name;     //이름 표시
         GetComponent<SpriteRenderer>().sprite = info.Image;
     }
 
