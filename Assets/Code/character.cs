@@ -17,19 +17,12 @@ public class character : MonoBehaviour
     void Start()
     {
         transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>().text = Name;
-        talk_UI = transform.GetChild(0).GetChild(1).GetComponent<TextMeshProUGUI>();
-
-        talk_UI.text = "'E' Conversation";
+        talk_UI = GameObject.Find("UI").transform.Find("talk_ui").Find("talk").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    private void OnMouseDown()
-    {   
-        
         
     }
 
@@ -45,14 +38,17 @@ public class character : MonoBehaviour
     IEnumerator talk()
     {
         int Now = 0;                                        //대사할 배열
+        GameObject.Find("UI").GetComponent<UI>().isTalking = true;      //UI출력 하셈
+        GameObject.Find("UI").transform.Find("talk_ui").Find("name").GetComponent<TextMeshProUGUI>().text = Name;
         while (sentence[Now] != string.Empty)               //할말이 없을 떄까지
         {
-            talk_UI.text = sentence[Now];
+            talk_UI.text = sentence[Now];           //이 캐릭터가 가진 대사를 UI에 전달, UI에서 출력됨
             Now++;
             yield return new WaitForSeconds(3);
         }
         talk_UI.text = string.Empty;
         talking = false;                                      //이야기 종료
+        GameObject.Find("UI").GetComponent<UI>().isTalking = false;      //UI끄셈
         yield break;
     }
  

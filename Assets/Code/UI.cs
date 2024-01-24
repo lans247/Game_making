@@ -17,7 +17,8 @@ public class UI : MonoBehaviour
     public bool BOSS = false;       //보스 있는지 체크
     public GameObject BOSS_UI;      //보스 UI
 
-
+    public GameObject talk_UI;      //talk_ui
+    public bool isTalking = false;  //토킹 체크
 
     public GameObject player;
 
@@ -56,25 +57,18 @@ public class UI : MonoBehaviour
         item = player.GetComponent<item_manager>().bag;
 
         BOSS_UI = transform.Find("BOSS").gameObject;
+        talk_UI = transform.Find("talk_ui").gameObject;
     }
 
 
-    public void FixedUpdate()
+    public void Update()
     {
         item = player.GetComponent<item_manager>().bag;
 
-        if (Input.GetKey(KeyCode.I))        //i눌렀을 때 인벤 열기
+        if (Input.GetKeyDown(KeyCode.I))        //i눌렀을 때 인벤 열기
         {
-            if (!inven_open)
-            {
-                inventory.SetActive(true);
-                inven_open = true;
-            }
-            else
-            {
-                inventory.SetActive(false);
-                inven_open = false;
-            }
+            inven_open = !inven_open;
+            inventory.SetActive(inven_open);
         }
 
         if (item.Count > inven_have) //만약에 관측되는 아이템 갯수가 표시 중인 것보다 많다면
@@ -82,16 +76,10 @@ public class UI : MonoBehaviour
             bag_manage();
         }
 
-        if(BOSS)        //보스 있으면
-        {
-            BOSS_UI.SetActive(true);
-        }
-        else
-        {
-            BOSS_UI.SetActive(false);
-        }
 
-        
+        BOSS_UI.SetActive(BOSS);
+        talk_UI.SetActive(isTalking);
+
     }
 
 
