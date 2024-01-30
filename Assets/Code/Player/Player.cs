@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
     public float speed = 5.0f;
 
+    public Animator animator;
+
     public string now_map;
     public float[] map_range = new float[4]; //-x, x, -y, x
     
@@ -24,7 +26,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
+        animator = GetComponent<Animator>();
     }
 
     
@@ -36,9 +38,24 @@ public class Player : MonoBehaviour
 
     void move()
     {
+        animator.SetInteger("move_how", 0);
+
         float x_move = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
         float y_move = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
         transform.Translate(x_move, y_move, 0);
+
+        if(y_move > 0)
+        {
+            animator.SetInteger("move_how", 1);
+        }
+        if(x_move > 0)
+        {
+            animator.SetInteger("move_how", 2);
+        }
+        if (y_move < 0)
+        {
+            animator.SetInteger("move_how", 3);
+        }
 
 
 
