@@ -38,7 +38,6 @@ public class Player : MonoBehaviour
 
     void move()
     {
-        animator.SetInteger("move_how", 0);
 
         float x_move = Input.GetAxisRaw("Horizontal") * speed * Time.deltaTime;
         float y_move = Input.GetAxisRaw("Vertical") * speed * Time.deltaTime;
@@ -46,15 +45,23 @@ public class Player : MonoBehaviour
 
         if(y_move > 0)
         {
-            animator.SetInteger("move_how", 1);
+            animator.SetTrigger("up");
         }
-        if(x_move > 0)
+        else if (y_move < 0)
         {
-            animator.SetInteger("move_how", 2);
+            animator.SetTrigger("down");
         }
-        if (y_move < 0)
+        else if (x_move > 0)
         {
-            animator.SetInteger("move_how", 3);
+            animator.SetTrigger("move_r");
+        }
+        else if (x_move < 0)
+        {
+            animator.SetTrigger("move_l");
+        }
+        else if (x_move == y_move && y_move == 0)
+        {
+            animator.SetTrigger("normal");
         }
 
 
