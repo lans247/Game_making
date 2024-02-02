@@ -37755,6 +37755,8 @@ MonoBehaviour:
   - 5
   - -5
   - 4
+  rolldelay: 0
+  rolling: 0
 --- !u!114 &431504717
 MonoBehaviour:
   m_ObjectHideFlags: 0
