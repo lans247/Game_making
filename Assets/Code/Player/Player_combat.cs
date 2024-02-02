@@ -2,10 +2,12 @@ using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Numerics;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Player_combat : MonoBehaviour
 {
@@ -24,11 +26,11 @@ public class Player_combat : MonoBehaviour
     public GameObject UI;
 
 
-    public Image HPbar;
+    public UnityEngine.UI.Image HPbar;
     public TextMeshProUGUI HPnum;
 
 
-    public GameObject attack_image;
+    public List<GameObject> attack_image;
     public bool attacking = false;
 
     public GameObject indicator;        //알림창, 데미지 혹은 체력 회복시
@@ -42,7 +44,7 @@ public class Player_combat : MonoBehaviour
         
         UI = GameObject.FindWithTag("UI");  //UI 가져오기
 
-        HPbar = UI.transform.Find("HPbar").GetComponent<Image>();
+        HPbar = UI.transform.Find("HPbar").GetComponent<UnityEngine.UI.Image>();
         HPnum = UI.transform.Find("HPnum").GetComponent<TextMeshProUGUI>();
 
         
@@ -68,29 +70,58 @@ public class Player_combat : MonoBehaviour
 
     }
 
+    
 
-    void attack()           //공격
+    void attack()           //공격 / 딜레이 호출 -> 딜레이에서 콤보 호출 -> 콤보 끝나면 대기후 다시 복귀
     {
         if (Input.GetMouseButton(0) && !attacking)
         {
-            StartCoroutine("attack_delay");
-
-            Vector2 ve = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;     //클릭하는 방향
-            quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //방향
-
-
-            attack_image.GetComponent<attack_image>().damage = damage;      //만들이미지에 데미지 넣기
-            Instantiate(attack_image, transform.position, normal);         //1칸 띄어서 생성
             attacking = true;
+            StartCoroutine(attack_delay());
         }
     }
 
     IEnumerator attack_delay()      //공격딜레이
     {
+        yield return StartCoroutine(combo_attack());
+        Debug.Log("초세기 시작");
         yield return new WaitForSeconds(2 - attack_speed);
         attacking = false;
-        yield break;
     }
+
+
+    IEnumerator combo_attack()
+    {
+        int combo_num = 0;
+        float combo_delay = attack_speed * 0.5f;
+        int max_combo = attack_image.Count;
+
+        while(combo_num < max_combo)
+        {
+            UnityEngine.Vector2 ve = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;     //클릭하는 방향
+            quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //방향
+
+
+            attack_image[combo_num].GetComponent<attack_image>().damage = damage;      //만들이미지에 데미지 넣기
+            Instantiate(attack_image[combo_num], transform.position, normal);         //1칸 띄어서 생성
+
+            combo_num++;
+
+
+            //다음 콤보 연계
+            yield return new WaitForSeconds(1 - combo_delay);
+            if(!Input.GetMouseButton(0))        //콤보딜레이 사이동안 입력이 없으면 콤보어택 취소
+            {
+                break;
+            }
+        }
+
+    }
+
+
+
+
+
 
 
 
@@ -133,24 +164,7 @@ public class Player_combat : MonoBehaviour
 
     public void Personality_setting()   //세팅이 따른 변화
     {
-        if (Personality[3] > 10)  //분노
-        {
-            Max_HP = 150;
-        }
-        else if (Personality[3] < -10)
-        {
-            def = 10;
-        }
-
-        if (Personality[6] > 10)
-        {
-            attack_speed = 0.8f;
-            damage = 20;
-        }
-        else if (Personality[6] < -10)
-        {
-            attack_speed = 1.5f;
-        }
+        
     }
 
 
@@ -169,10 +183,10 @@ public class Player_combat : MonoBehaviour
 
 
 
-    public void indicate(int dama)       //데미지 인디케이터 소환
+    public void indicate(int dama)       //데미지 인디케이터 소환, 리커버리도 포함
     {
         indicator.GetComponent<indicator>().type = "recover";
         indicator.GetComponent<indicator>().content = dama;
-        Instantiate(indicator, transform.position, Quaternion.Euler(0, 0, 0));
+        Instantiate(indicator, transform.position, UnityEngine.Quaternion.Euler(0, 0, 0));
     }
 }

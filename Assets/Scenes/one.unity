@@ -37837,7 +37837,10 @@ MonoBehaviour:
   UI: {fileID: 0}
   HPbar: {fileID: 0}
   HPnum: {fileID: 0}
-  attack_image: {fileID: 9037813585929296977, guid: 4e2525336b450bf4983f1694a6182ef0, type: 3}
+  attack_image:
+  - {fileID: 9037813585929296977, guid: 4e2525336b450bf4983f1694a6182ef0, type: 3}
+  - {fileID: 2139262817376816873, guid: 45fe5b669aae260479f54c53f2fdbace, type: 3}
+  - {fileID: 3538647587290599133, guid: 22ffdfc0fb65f8740a951a1795d95d1b, type: 3}
   attacking: 0
   indicator: {fileID: 2839536848519281639, guid: 9c2ae602b2ef9e1459e964086ed747eb, type: 3}
 --- !u!50 &431504721
@@ -53958,7 +53961,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 02e3eee0f7c186a42982e4bb4bda2ad8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
