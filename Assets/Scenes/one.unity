@@ -37656,7 +37656,7 @@ GameObject:
   - component: {fileID: 431504716}
   - component: {fileID: 431504720}
   - component: {fileID: 431504722}
-  - component: {fileID: 431504717}
+  - component: {fileID: 431504724}
   - component: {fileID: 431504718}
   - component: {fileID: 431504721}
   - component: {fileID: 431504723}
@@ -37757,18 +37757,6 @@ MonoBehaviour:
   - 4
   rolldelay: 0
   rolling: 0
---- !u!114 &431504717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 431504713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c02c6448e0cfe4d94ca127d7cc08f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &431504718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -37906,6 +37894,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &431504724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431504713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ec9f8d17a752d4880987f720a36b34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Now_quests:
+  - {fileID: 11400000, guid: 6ef0a4cc96974374598c89ea7944812a, type: 2}
+  Clear_quests: []
+  manage_quest_num: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

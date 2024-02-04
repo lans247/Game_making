@@ -56,6 +56,9 @@ public class Enemy_normal : MonoBehaviour
         if (HP <= 0) //Ã¼·Â ¾øÀ¸¸é »ç¸Á
         {
             reward_drop();
+
+            Player.GetComponent<Quest_manager>().update_progress(1, info.ID);       //Äù½ºÆ® Á¶°Ç ÃæÁ· -> ³Ñ±è
+
             Destroy(this.gameObject); 
         }      
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Quest_giver : MonoBehaviour
 {
-    public Quest a;
+    public Quest_info a;
     public int[] quests = new int[4];
 
     
