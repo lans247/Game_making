@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Numerics;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -19,11 +20,19 @@ public class Player_combat : MonoBehaviour
     public int MP;
     public int def = 0;
     public float attack_speed = 1.0f;
+    public UnityEngine.UI.Image attack_delay_image;
+
     public int damage = 10;
     public bool recovering = false;     //재생중
     public int recover_info = 1;            //재생 수치, 기본 1
 
-    public GameObject UI;
+
+    public GameObject shield;       //쉴드
+
+
+    public GameObject UI;       //화면에 상태를 표시
+
+    public GameObject Player_UI;        //캐릭터 주변에 표시될 UI
 
 
     public UnityEngine.UI.Image HPbar;
@@ -43,10 +52,15 @@ public class Player_combat : MonoBehaviour
         MP = Max_MP;
         
         UI = GameObject.FindWithTag("UI");  //UI 가져오기
-
         HPbar = UI.transform.Find("HPbar").GetComponent<UnityEngine.UI.Image>();
         HPnum = UI.transform.Find("HPnum").GetComponent<TextMeshProUGUI>();
 
+
+        Player_UI = transform.Find("indicate").gameObject;
+        attack_delay_image = Player_UI.transform.Find("attack_delay").GetComponent<UnityEngine.UI.Image>();
+
+        shield = transform.Find("shield").gameObject;
+        shield.SetActive(false);
         
 
         Personality_reset();                                            //성격 리셋
@@ -70,7 +84,45 @@ public class Player_combat : MonoBehaviour
 
     }
 
-    
+    void Update()
+    {
+        if(Input.GetMouseButton(1) && shield.activeSelf == false)       //우클릭, 쉴드중 아닐때
+        {
+            StartCoroutine(shield_act());
+        }
+    }
+
+    IEnumerator shield_act()
+    { 
+        shield.SetActive(true);
+
+
+        float normal_speed = GetComponent<Player>().speed;
+        GetComponent<Player>().speed = 0;                   //쉴드 중에는 정지
+
+
+        //마우스 땔때까지 계속 유지
+        while (true)
+        {
+            //쉴드 생성
+            UnityEngine.Vector2 ve = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;     //클릭하는 방향
+            quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //방향
+            shield.transform.rotation = normal;         //클릭 방향으로 회전
+
+            if (Input.GetMouseButton(1) == false)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        GetComponent<Player>().speed = normal_speed;        //다시 움직임
+        shield.SetActive(false);
+
+    }
+
+
+
 
     void attack()           //공격 / 딜레이 호출 -> 딜레이에서 콤보 호출 -> 콤보 끝나면 대기후 다시 복귀
     {
@@ -84,8 +136,16 @@ public class Player_combat : MonoBehaviour
     IEnumerator attack_delay()      //공격딜레이
     {
         yield return StartCoroutine(combo_attack());
-        Debug.Log("초세기 시작");
-        yield return new WaitForSeconds(2 - attack_speed);
+
+        float attack_delay_time = 2 - attack_speed; //실제로 기다리는 시간
+
+        while(attack_delay_image.fillAmount != 1)     
+        {
+            attack_delay_image.fillAmount += 0.01f;
+            yield return new WaitForSeconds(attack_delay_time * 0.01f);      
+        }
+
+        attack_delay_image.fillAmount = 0;
         attacking = false;
     }
 
