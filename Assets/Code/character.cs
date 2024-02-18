@@ -40,16 +40,39 @@ public class character : MonoBehaviour
         int Now = 0;                                        //대사할 배열
         GameObject.Find("UI").GetComponent<UI>().isTalking = true;      //UI출력 하셈
         GameObject.Find("UI").transform.Find("talk_ui").Find("name").GetComponent<TextMeshProUGUI>().text = Name;
+
+
         while (sentence[Now] != string.Empty)               //할말이 없을 떄까지
         {
-            talk_UI.text = sentence[Now];           //이 캐릭터가 가진 대사를 UI에 전달, UI에서 출력됨
+            yield return StartCoroutine(talk_sentence(sentence[Now]));
+            yield return new WaitUntil(() => Input.anyKey);
             Now++;
-            yield return new WaitForSeconds(3);
         }
         talk_UI.text = string.Empty;
         talking = false;                                      //이야기 종료
         GameObject.Find("UI").GetComponent<UI>().isTalking = false;      //UI끄셈
+
+
         yield break;
     }
+
+    IEnumerator talk_sentence(string c)
+    {
+        talk_UI.text = "";
+        for(int i = 0; i < c.Length; i++)
+        {
+            talk_UI.text += c[i].ToString();
+            yield return new WaitForSeconds(0.2f);
+        }
+        yield return null;
+    }
  
+
+    
+
+
+
+
+
+
 }
