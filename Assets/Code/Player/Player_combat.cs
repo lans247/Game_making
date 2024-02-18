@@ -98,7 +98,7 @@ public class Player_combat : MonoBehaviour
 
 
         float normal_speed = GetComponent<Player>().speed;
-        GetComponent<Player>().speed = 0;                   //쉴드 중에는 정지
+        GetComponent<Player>().can_move = false;                   //쉴드 중에는 정지
 
 
         //마우스 땔때까지 계속 유지
@@ -116,7 +116,7 @@ public class Player_combat : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
 
-        GetComponent<Player>().speed = normal_speed;        //다시 움직임
+        GetComponent<Player>().can_move = true;        //다시 움직임
         shield.SetActive(false);
 
     }

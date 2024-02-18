@@ -12,12 +12,12 @@ public class attack_image : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine("ex");
+        StartCoroutine(ex());
     }
 
     IEnumerator ex()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         Destroy(this.gameObject);
     }
 

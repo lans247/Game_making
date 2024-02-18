@@ -38287,6 +38287,7 @@ MonoBehaviour:
   - 4
   rolldelay: 0
   rolling: 0
+  can_move: 1
 --- !u!61 &431504718
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -38350,7 +38351,7 @@ MonoBehaviour:
   Max_MP: 100
   MP: 0
   def: 0
-  attack_speed: 1.99
+  attack_speed: 1
   attack_delay_image: {fileID: 0}
   damage: 200
   recovering: 0
@@ -38361,9 +38362,8 @@ MonoBehaviour:
   HPbar: {fileID: 0}
   HPnum: {fileID: 0}
   attack_image:
-  - {fileID: 9037813585929296977, guid: 4e2525336b450bf4983f1694a6182ef0, type: 3}
-  - {fileID: 2139262817376816873, guid: 45fe5b669aae260479f54c53f2fdbace, type: 3}
-  - {fileID: 3538647587290599133, guid: 22ffdfc0fb65f8740a951a1795d95d1b, type: 3}
+  - {fileID: 1695887834435236760, guid: 0488797e303af1c43b7722a43c930b3b, type: 3}
+  - {fileID: 6207043678553236966, guid: 9030a4a040fe0d445a4c93e092c2c262, type: 3}
   attacking: 0
   indicator: {fileID: 2839536848519281639, guid: 9c2ae602b2ef9e1459e964086ed747eb, type: 3}
 --- !u!50 &431504721

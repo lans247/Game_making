@@ -30,8 +30,10 @@ public class character : MonoBehaviour
     {
         if(collision.tag == "Player" && Input.GetKey(KeyCode.E) && !talking)        //이야기 중이 아니고 상호작용 키를 누른 이후에
         {
+            collision.GetComponent<Player>().can_move = false;      //정지
             talking = true;         //이야기 중
             StartCoroutine("talk"); //이야기
+            collision.GetComponent<Player>().can_move = true;      //정지
         }
     }
 

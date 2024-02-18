@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public int rolldelay;
     public bool rolling = false;
 
+    public bool can_move = true;
 
     private void Awake()//이동시 2개 이상이면 제거
     {
@@ -38,7 +39,10 @@ public class Player : MonoBehaviour
     
     void FixedUpdate()
     {
-        move();
+        if (can_move)
+        {
+            move();
+        }
     }
 
 
