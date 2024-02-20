@@ -45,6 +45,12 @@ public class Player_combat : MonoBehaviour
     public GameObject indicator;        //알림창, 데미지 혹은 체력 회복시
 
 
+
+
+    public Skill_info[] equips = new Skill_info[5];     //스킬 데이터
+
+
+
     void Start()
     {
 
@@ -81,7 +87,7 @@ public class Player_combat : MonoBehaviour
 
         Personality_setting();      //성격에 따른 변화
 
-
+        skill_manage();
     }
 
     void Update()
@@ -177,6 +183,71 @@ public class Player_combat : MonoBehaviour
         }
 
     }
+
+
+
+
+
+    void skill_manage()
+    {
+        UI.GetComponent<UI>().equips = equips;
+
+
+        //cool이 true일때 사용가능한 상태 스킬번호와 키패드와 1 차이가 남. 신경써야 함
+        if (equips[0] != null && Input.GetKey(KeyCode.Alpha1) && equips[0].cool)
+        {
+            Debug.Log("skill1 발동");
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(0));
+        }
+        if (equips[1] != null && Input.GetKey(KeyCode.Alpha2) && equips[1].cool)
+        {
+            Debug.Log("skill2 발동");
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(1));
+        }
+        if (equips[2] != null && Input.GetKey(KeyCode.Alpha3) && equips[2].cool)
+        {
+            Debug.Log("skill3 발동");
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(2));
+        }
+        if (equips[3] != null && Input.GetKey(KeyCode.Alpha4) && equips[3].cool)
+        {
+            Debug.Log("skill4 발동");
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(3));
+        }
+        if (equips[4] != null && Input.GetKey(KeyCode.Alpha5) && equips[4].cool)
+        {
+            Debug.Log("skill5 발동");
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(4));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

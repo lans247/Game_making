@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class UI : MonoBehaviour
 {
@@ -27,9 +28,17 @@ public class UI : MonoBehaviour
     public List<Item_info> item;
 
 
+    public GameObject Skill_UI;
+
     public GameObject inventory;        //인벤토리
     public bool inven_open = false;
     public int inven_have;              //인벤에 표시중인 갯수
+
+
+
+    public Skill_info[] equips = new Skill_info[5];
+
+
 
     private void Awake() //이동시 2개 이상이면 제거
     {
@@ -58,6 +67,7 @@ public class UI : MonoBehaviour
 
         BOSS_UI = transform.Find("BOSS").gameObject;
         talk_UI = transform.Find("talk_ui").gameObject;
+        Skill_UI = transform.Find("Skill").gameObject;
     }
 
 
@@ -80,6 +90,8 @@ public class UI : MonoBehaviour
         BOSS_UI.SetActive(BOSS);
         talk_UI.SetActive(isTalking);
 
+        skill_manage();
+
     }
 
 
@@ -99,10 +111,77 @@ public class UI : MonoBehaviour
 
 
 
+
+
+
+    public void skill_manage()
+    {
+        for(int i =0;i<5;i++)
+        {
+            if (equips[i] != null)
+            {
+                Skill_UI.transform.GetChild(i).gameObject.SetActive(true);
+                Skill_UI.transform.GetChild(i).GetComponent<Image>().sprite = equips[i].imagine;
+            }
+            else
+            {
+                Skill_UI.transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+
+
+
+
+    }
+
+
+
+    public IEnumerator cool_manage(int number)         //해당하는 번호의 스킬의 쿨타임 돌리기
+    {   
+        equips[number].cool = false;            //쿨 시작
+
+        int cooltime = equips[number].cooltime;
+        Image cool_ui = Skill_UI.transform.GetChild(number).GetComponent<Image>();
+
+        cool_ui.fillAmount = 0;
+
+        while (cool_ui.fillAmount != 1)         //쿨타임 진행
+        {
+            cool_ui.fillAmount += 0.01f;
+            yield return new WaitForSeconds(cooltime * 0.01f);
+        }
+
+        equips[number].cool = true;             //쿨 완료
+        yield return null;
+    }
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void map_allert()        //맵 띄우기
     {
-        StopCoroutine("map_allert_act");        //기존 맵 알림 끄고
-        StartCoroutine("map_allert_act");       //새로운 맵 알림
+        StopCoroutine(map_allert_act());        //기존 맵 알림 끄고
+        StartCoroutine(map_allert_act());       //새로운 맵 알림
     }
 
     public IEnumerator map_allert_act()     //멥 알림
@@ -129,14 +208,6 @@ public class UI : MonoBehaviour
 
         yield break;
     }
-
-
-
-
-
-
-
-
 
     public void fade_action(string transfer_map, Vector3 position)      //코루틴 호출을 위한 함수
     {

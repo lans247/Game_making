@@ -30,7 +30,7 @@ public class Enemy_normal : MonoBehaviour
     {
         HP = info.Max_HP;
         MP = info.Max_MP;
-        speed = 2;    
+        speed = info.speed;    
         attack_speed = info.attack_speed;       //2가 최고 공속
 
         HP_bar = transform.GetChild(1).Find("HPbar");         //HP바 받아오기;
@@ -79,8 +79,11 @@ public class Enemy_normal : MonoBehaviour
 
     public void reward_drop()       //보상 떨구기
     {
-        int r = Random.Range(0, info.rewards.Count);
-        Instantiate(info.rewards[r], transform.position, Quaternion.Euler(0,0,0));
+        if(info.rewards.Count > 0)
+        {
+            int r = Random.Range(0, info.rewards.Count);
+            Instantiate(info.rewards[r], transform.position, Quaternion.Euler(0, 0, 0));
+        } 
     }
 
 
