@@ -14,13 +14,16 @@ public class Player_combat : MonoBehaviour
 {
     public List<int> Personality = new List<int>();     //성격
 
+
+    //기본 스텟
     public int Max_HP = 100;
     public int HP;
     public int Max_MP = 100;
     public int MP;
     public int def = 0;
     public float attack_speed = 1.0f;
-    public UnityEngine.UI.Image attack_delay_image;
+
+    public UnityEngine.UI.Image attack_delay_image;     //공격 딜레이를 표시할 인디케이터 이미지
 
     public int damage = 10;
     public bool recovering = false;     //재생중
@@ -30,7 +33,7 @@ public class Player_combat : MonoBehaviour
     public GameObject shield;       //쉴드
 
 
-    public GameObject UI;       //화면에 상태를 표시
+    public GameObject UI;               //화면에 표시되는 UI
 
     public GameObject Player_UI;        //캐릭터 주변에 표시될 UI
 
@@ -39,7 +42,7 @@ public class Player_combat : MonoBehaviour
     public TextMeshProUGUI HPnum;
 
 
-    public List<GameObject> attack_image;
+    public List<GameObject> attack_image;   //공격 이미지
     public bool attacking = false;
 
     public GameObject indicator;        //알림창, 데미지 혹은 체력 회복시
@@ -97,6 +100,7 @@ public class Player_combat : MonoBehaviour
             StartCoroutine(shield_act());
         }
     }
+
 
     IEnumerator shield_act()
     { 
@@ -156,7 +160,7 @@ public class Player_combat : MonoBehaviour
     }
 
 
-    IEnumerator combo_attack()
+    IEnumerator combo_attack()          //여러번 공격, 기본적으로 1번 공격도 이것이 호출
     {
         int combo_num = 0;
         float combo_delay = attack_speed * 0.5f;
@@ -219,17 +223,6 @@ public class Player_combat : MonoBehaviour
             Debug.Log("skill5 발동");
             UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(4));
         }
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

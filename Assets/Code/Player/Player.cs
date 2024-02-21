@@ -1,14 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
 
 public class Player : MonoBehaviour
 {
     public float speed = 5.0f;
 
-    public Animator animator;
+    public Animator animator;       //플레이어 애니메이션
 
     public string now_map;
     public float[] map_range = new float[4]; //-x, x, -y, x
@@ -16,9 +16,14 @@ public class Player : MonoBehaviour
     public int rolldelay;
     public bool rolling = false;
 
-    public bool can_move = true;
+    public bool can_move = true;        //움직일 수 있는 상태 인가?
 
-    private void Awake()//이동시 2개 이상이면 제거
+
+
+    public GameObject Player_UI;        //캐릭터 주변에 표시될 UI
+    public Image roll_delay_image;      //구르기 딜레이를 표시할 인디케이터 이미지
+
+    private void Awake()                //이동시 2개 이상이면 제거
     {
         var obj = FindObjectsOfType<Player>();
         if(obj.Length == 1)
@@ -33,7 +38,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         rolldelay = 4;
-        animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();        //움직일 떄 애니메이션
+
+        Player_UI = transform.Find("indicate").gameObject;
+        roll_delay_image = Player_UI.transform.Find("roll_delay").GetComponent<Image>();
+
+
     }
 
     
@@ -43,6 +53,7 @@ public class Player : MonoBehaviour
         {
             move();
         }
+
     }
 
 
@@ -83,7 +94,7 @@ public class Player : MonoBehaviour
         }
         else { speed = 5.0f; }
 
-        if(Input.GetKey(KeyCode.Space) && !rolling)
+        if(Input.GetKey(KeyCode.Space) && !rolling)     //구르는 중이 아닐때 구르기 호출
         {
             rolling = true;
             StartCoroutine(roll_delay());
@@ -110,7 +121,16 @@ public class Player : MonoBehaviour
 
     IEnumerator roll_delay()
     {
-        yield return new WaitForSeconds(rolldelay);
+        roll_delay_image.fillAmount = 0;
+
+        while(roll_delay_image.fillAmount < 1)
+        {
+            roll_delay_image.fillAmount += 0.01f;
+            yield return new WaitForSeconds(rolldelay * 0.01f);
+
+        }
+
+        roll_delay_image.fillAmount = 0;
         rolling = false;
     }
 }

@@ -32,7 +32,7 @@ public class character : MonoBehaviour
         {
             collision.GetComponent<Player>().can_move = false;      //정지
             talking = true;         //이야기 중
-            StartCoroutine("talk"); //이야기
+            StartCoroutine(talk()); //이야기
             collision.GetComponent<Player>().can_move = true;      //정지
         }
     }
@@ -64,7 +64,7 @@ public class character : MonoBehaviour
         for(int i = 0; i < c.Length; i++)
         {
             talk_UI.text += c[i].ToString();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.1f);
         }
         yield return null;
     }
