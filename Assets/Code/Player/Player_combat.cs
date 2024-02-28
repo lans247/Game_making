@@ -14,20 +14,39 @@ public class Player_combat : MonoBehaviour
 {
     public List<int> Personality = new List<int>();     //성격
 
+    //실제 적용 스텟
+    public int Max_HP;
+    public int HP;
+    public int Max_MP;
+    public int MP;
+    public int def;
+    public float attack_speed;
+    public int damage;
+    public int recover_info;            //재생 수치, 기본 1
 
     //기본 스텟
-    public int Max_HP = 100;
-    public int HP;
-    public int Max_MP = 100;
-    public int MP;
-    public int def = 0;
-    public float attack_speed = 1.0f;
+    public int normal_Max_HP = 100;
+    public int normal_Max_MP = 100;
+    public int normal_def = 0;
+    public float normal_attack_speed = 1.0f;
+    public int normal_damage = 10;
+    public int normal_recover_info;
+
+    //버프 스텟
+    public int buff_Max_HP;
+    public int buff_Max_MP;
+    public int buff_def;
+    public float buff_attack_speed = 1;             //공속 버프는 곱연산 기본 1
+    public int buff_damage;
+    public int buff_recover_info;
+
+
 
     public UnityEngine.UI.Image attack_delay_image;     //공격 딜레이를 표시할 인디케이터 이미지
 
-    public int damage = 10;
+   
     public bool recovering = false;     //재생중
-    public int recover_info = 1;            //재생 수치, 기본 1
+    
 
 
     public GameObject shield;       //쉴드
@@ -56,11 +75,15 @@ public class Player_combat : MonoBehaviour
 
     void Start()
     {
+        stat_manage();
 
         HP = Max_HP;
         MP = Max_MP;
-        
-        UI = GameObject.FindWithTag("UI");  //UI 가져오기
+
+
+
+        //화면 UI 가져오기
+        UI = GameObject.FindWithTag("UI"); 
         HPbar = UI.transform.Find("HPbar").GetComponent<UnityEngine.UI.Image>();
         HPnum = UI.transform.Find("HPnum").GetComponent<TextMeshProUGUI>();
 
@@ -74,6 +97,22 @@ public class Player_combat : MonoBehaviour
 
         Personality_reset();                                            //성격 리셋
     }
+
+    public void stat_manage()           //버프와 기타 등등에 대한 스텟 관리
+    {
+        //기본 수치와 버프 스텟을 실 스텟에 적용 
+        Max_HP = normal_Max_HP + buff_Max_HP;
+        Max_MP = normal_Max_MP + buff_Max_MP;
+        def = normal_def + buff_def;
+        attack_speed = normal_attack_speed * buff_attack_speed;
+        damage = normal_damage + buff_damage;
+        recover_info = normal_recover_info + buff_recover_info;
+    }
+
+
+
+
+
 
     
     void FixedUpdate()
@@ -91,6 +130,14 @@ public class Player_combat : MonoBehaviour
         Personality_setting();      //성격에 따른 변화
 
         skill_manage();
+
+
+
+        //버프 체크
+        stat_manage();
+
+
+
     }
 
     void Update()
@@ -189,7 +236,12 @@ public class Player_combat : MonoBehaviour
     }
 
 
-
+    /**
+     * 스킬 파트
+     * 착용 중인 스킬을 ID를 통해서 사용
+     * skill_info에는 id와 이름, 쿨타임을 넣고.
+     * skill를 사용하면 UI에서 쿨타임을 계산하고, skill manage에서 스킬을 발동
+     */
 
 
     void skill_manage()
@@ -200,8 +252,8 @@ public class Player_combat : MonoBehaviour
         //cool이 true일때 사용가능한 상태 스킬번호와 키패드와 1 차이가 남. 신경써야 함
         if (equips[0] != null && Input.GetKey(KeyCode.Alpha1) && equips[0].cool)
         {
-            Debug.Log("skill1 발동");
-            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(0));
+            skill_using(equips[0].id);                                                          //장착한 스킬의 ID를 스킬 유징으로 넘김
+            UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(0));         //UI에 있는 쿨타임 매니지 시작
         }
         if (equips[1] != null && Input.GetKey(KeyCode.Alpha2) && equips[1].cool)
         {
@@ -227,8 +279,32 @@ public class Player_combat : MonoBehaviour
     }
 
 
+    void skill_using(int id)            //해당하는 아이디의 스킬 시작
+    {
+        switch(id)
+        {
+            case 0:
+                StartCoroutine(skill_0());
+                break;
 
 
+
+            default:
+                break;
+        }
+
+
+    }
+
+    IEnumerator skill_0()
+    {
+        buff_damage += 10;               //데미지 증가
+        buff_attack_speed *= 1.5f;       //공격 속도 1.5배
+        yield return new WaitForSeconds(2f);
+        buff_damage -= 10;
+        buff_attack_speed /= 1.5f;
+        yield return null;
+    }
 
 
 

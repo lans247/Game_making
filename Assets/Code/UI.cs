@@ -23,20 +23,19 @@ public class UI : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject item_image_frame;
+    
 
-    public List<Item_info> item;
-
-
-    public GameObject Skill_UI;
-
+    public List<Item_info> item;        //아이템 정보가 저장되는 리스트
+    
     public GameObject inventory;        //인벤토리
     public bool inven_open = false;
     public int inven_have;              //인벤에 표시중인 갯수
 
-
-
-    public Skill_info[] equips = new Skill_info[5];
+    public GameObject item_image_frame;         //인벤토리에 표시되는 아이템 이미지의 프레임
+    
+    
+    public GameObject Skill_UI;                         //스킬 UI
+    public Skill_info[] equips = new Skill_info[5];     //장착 중인 스킬
 
 
 
