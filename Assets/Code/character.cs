@@ -37,6 +37,20 @@ public class character : MonoBehaviour
         }
     }
 
+
+    /*
+     * talk를 통해서 sentence배열에 있는 문자열을 나열 가능.
+     * 
+     * UI에 있는 talk바에 sentence의 문자열을 전달.
+     * 그리고 UI의 talk바를 활성화
+     * 
+     * talk함수는 문자열 리스트를 공백이 올때까지 출력(now에서 부터 시작)
+     * talk_sentence는 문자열 하나를 문자 하나하나 천천히 출력
+     * 
+     * 
+     */
+
+
     IEnumerator talk()
     {
         int Now = 0;                                        //대사할 배열

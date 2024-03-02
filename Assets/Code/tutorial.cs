@@ -65,11 +65,31 @@ public class tutorial : MonoBehaviour
         GameObject.Find("UI").GetComponent<UI>().isTalking = false;
         Player.GetComponent<Player>().can_move = true;
 
+        yield return new WaitUntil(() => Player.GetComponent<Player_combat>().shield.activeSelf);
 
+        Player.GetComponent<Player>().can_move = false;
+        GameObject.Find("UI").GetComponent<UI>().isTalking = true;
+        yield return StartCoroutine(talk_sentence("그래. 스킬을 사용해 보도록"));
+        yield return new WaitUntil(() => Input.anyKey);
+        yield return StartCoroutine(talk_sentence("키패드를 클릭하여 사용할 수 있다."));
+        yield return new WaitUntil(() => Input.anyKey);
+        yield return StartCoroutine(talk_sentence("[1]을 누르면 된다. 실시."));
+        yield return new WaitUntil(() => Input.anyKey);
+        GameObject.Find("UI").GetComponent<UI>().isTalking = false;
+        Player.GetComponent<Player>().can_move = true;
 
+        yield return new WaitUntil(() => Player.GetComponent<Player_combat>().equips[0].cool != true);      //스킬이 사용해서 사용 불가능 상태일때
 
-
-
+        Player.GetComponent<Player>().can_move = false;
+        GameObject.Find("UI").GetComponent<UI>().isTalking = true;
+        yield return StartCoroutine(talk_sentence("굿"));
+        yield return new WaitUntil(() => Input.anyKey);
+        yield return StartCoroutine(talk_sentence(""));
+        yield return new WaitUntil(() => Input.anyKey);
+        yield return StartCoroutine(talk_sentence("."));
+        yield return new WaitUntil(() => Input.anyKey);
+        GameObject.Find("UI").GetComponent<UI>().isTalking = false;
+        Player.GetComponent<Player>().can_move = true;
 
 
 

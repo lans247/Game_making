@@ -249,7 +249,7 @@ public class Player_combat : MonoBehaviour
         UI.GetComponent<UI>().equips = equips;
 
 
-        //cool이 true일때 사용가능한 상태 스킬번호와 키패드와 1 차이가 남. 신경써야 함
+        //cool이 true일때 사용가능한 상태. 스킬번호와 키패드와 1 차이가 남. 신경써야 함
         if (equips[0] != null && Input.GetKey(KeyCode.Alpha1) && equips[0].cool)
         {
             skill_using(equips[0].id);                                                          //장착한 스킬의 ID를 스킬 유징으로 넘김
