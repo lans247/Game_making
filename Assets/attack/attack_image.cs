@@ -5,7 +5,6 @@ using UnityEngine;
 public class attack_image : MonoBehaviour
 {
     public int damage;
-    public bool hitted = false;     //맞았는지 체크
 
     public GameObject damage_indicate;      //가한 데미지 띄우기
 
@@ -23,17 +22,16 @@ public class attack_image : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.CompareTag("Enemy") && !hitted)       //적을 닿고, 이미 가격되지 않았을 경우
+        if(collision.collider.CompareTag("Enemy"))       //적을 닿고, 이미 가격되지 않았을 경우
         {
             int hit_damage = damage_cal(damage);            //실질적 히트 데미지
+            
             collision.collider.GetComponent<Enemy_normal>().HP -= hit_damage;
 
             Vector2 a = (collision.transform.position - transform.position).normalized;        //공격 위치에서 족 위치까지 벡터를 정규화
             collision.collider.GetComponent<Rigidbody2D>().AddForce(a * 40, ForceMode2D.Impulse);       //그 방향으로 밀칠기
 
             indicate(hit_damage, collision);
-
-            hitted = true;          //가격한 다음, 이 공격은 다른 영향을 미치지 않음
         }
     }
 

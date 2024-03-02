@@ -21,6 +21,8 @@ public class Enemy_normal : MonoBehaviour
     public float attack_speed;
 
 
+    public bool hitted;         //에네미 무적 상태 유지를 위한 오브젝트, true일때 0.5초 사이로 타격을 받은 이후
+
     public bool founded = false; //적(주인공)을 찾았는가?
 
     public GameObject Player;
@@ -50,12 +52,12 @@ public class Enemy_normal : MonoBehaviour
 
 
         if (!founded) { founding(); }   //못찾으면 찾기
-
+        
 
 
         if (HP <= 0) //체력 없으면 사망
         {
-            reward_drop();
+            reward_drop();      //보상드랍
 
             Player.GetComponent<Quest_manager>().update_progress(1, info.ID);       //퀘스트 조건 충족 -> 넘김
 
@@ -63,6 +65,8 @@ public class Enemy_normal : MonoBehaviour
         }      
 
     }
+
+
 
 
     public void founding()      //플레이어 찾기

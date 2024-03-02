@@ -252,12 +252,12 @@ public class Player_combat : MonoBehaviour
         //cool이 true일때 사용가능한 상태. 스킬번호와 키패드와 1 차이가 남. 신경써야 함
         if (equips[0] != null && Input.GetKey(KeyCode.Alpha1) && equips[0].cool)
         {
-            skill_using(equips[0].id);                                                          //장착한 스킬의 ID를 스킬 유징으로 넘김
+            skill_using(equips[0]);                                                          //장착한 스킬의 ID를 스킬 유징으로 넘김
             UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(0));         //UI에 있는 쿨타임 매니지 시작
         }
         if (equips[1] != null && Input.GetKey(KeyCode.Alpha2) && equips[1].cool)
         {
-            Debug.Log("skill2 발동");
+            skill_using(equips[1]);
             UI.GetComponent<UI>().StartCoroutine(UI.GetComponent<UI>().cool_manage(1));
         }
         if (equips[2] != null && Input.GetKey(KeyCode.Alpha3) && equips[2].cool)
@@ -279,14 +279,16 @@ public class Player_combat : MonoBehaviour
     }
 
 
-    void skill_using(int id)            //해당하는 아이디의 스킬 시작
+    void skill_using(Skill_info inform)            //해당하는 아이디의 스킬 시작
     {
-        switch(id)
+        switch(inform.id)
         {
             case 0:
                 StartCoroutine(skill_0());
                 break;
-
+            case 1:
+                StartCoroutine(skill_1(inform));
+                break;
 
 
             default:
@@ -306,7 +308,20 @@ public class Player_combat : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator skill_1(Skill_info a)
+    {
+        GameObject dash_effect = a.need[0];
 
+        UnityEngine.Vector2 ve = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;     //마우스 현재 방향
+        quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //회전 방향
+
+        Instantiate(dash_effect, transform.position, normal);       //대쉬 이펙트 출력
+
+        transform.Translate(ve * 20);                                //마우스 방향으로 텔레포트
+
+
+        yield return null;
+    }
 
 
 
