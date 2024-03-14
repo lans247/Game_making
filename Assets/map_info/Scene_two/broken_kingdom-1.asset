@@ -9,17 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f57521a6af203c040a02c3af26c63622, type: 3}
-  m_Name: Slime_attack
+  m_Script: {fileID: 11500000, guid: 6f11a5323f2cd7642857e3d1fc3bf015, type: 3}
+  m_Name: broken_kingdom-1
   m_EditorClassIdentifier: 
-  data:
-  - information: 
-    type: 1
-    require_id: 1
-    amount: 10
-  progress: 00000000
-  Description: 
-  Title: 
-  reward: 
-  previous: []
-  can_give: 0
+  map_name: broken_kingdom-1
+  map_range:
+  - -7
+  - -7
+  - -4
+  - 4
+  type: 
+  clear: 0

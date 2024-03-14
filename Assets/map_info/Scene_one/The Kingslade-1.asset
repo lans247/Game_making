@@ -18,3 +18,5 @@ MonoBehaviour:
   - 3
   - -42
   - -23
+  type: town
+  clear: 1

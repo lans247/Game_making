@@ -219,7 +219,8 @@ public class Player_combat : MonoBehaviour
             quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //방향
 
 
-            attack_image[combo_num].GetComponent<attack_image>().damage = damage;      //만들이미지에 데미지 넣기
+            attack_image[combo_num].GetComponent<attack_normal>().damage = damage;      //만들이미지에 데미지 넣기
+            attack_image[combo_num].GetComponent<attack_normal>().master = "Player";    //만든사람은 플레이어
             Instantiate(attack_image[combo_num], transform.position, normal);         //1칸 띄어서 생성
 
             combo_num++;
@@ -315,9 +316,10 @@ public class Player_combat : MonoBehaviour
         UnityEngine.Vector2 ve = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;     //마우스 현재 방향
         quaternion normal = quaternion.Euler(0, 0, Mathf.Atan2(ve.y, ve.x) - 3.14f);                //회전 방향
 
+        dash_effect.GetComponent<attack_normal>().master = "Player";
         Instantiate(dash_effect, transform.position, normal);       //대쉬 이펙트 출력
 
-        transform.Translate(ve * 20);                                //마우스 방향으로 텔레포트
+        transform.Translate(ve * 10);                                //마우스 방향으로 텔레포트
 
 
         yield return null;
@@ -367,7 +369,6 @@ public class Player_combat : MonoBehaviour
 
     public void Personality_reset()     //초기 세팅
     {
-        Debug.Log("innitial");
         Personality.Add(0);       //교만 , 겸손 0
         Personality.Add(0);       //탐욕 , 자선 1
         Personality.Add(0);        //질투 , 친절2

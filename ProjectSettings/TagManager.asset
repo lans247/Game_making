@@ -8,6 +8,9 @@ TagManager:
   - UI
   - Enemy
   - Item
+  - Map
+  - Shield
+  - Obstacle
   layers:
   - Default
   - TransparentFX

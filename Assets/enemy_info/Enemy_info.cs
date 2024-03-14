@@ -8,6 +8,7 @@ public class Enemy_info : ScriptableObject
 {
     public int ID;          //아이디
     public string Name;     //적 이름
+    public string attack_type;      //코드적용될 타입
 
     public int damage;      //공격력
     public float attack_speed;  //공격속도
@@ -24,4 +25,5 @@ public class Enemy_info : ScriptableObject
     public Sprite Image;    //모습
 
     public List<GameObject> rewards;     //드랍 아이템들
+
 }

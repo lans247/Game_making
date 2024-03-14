@@ -14,7 +14,7 @@ public class Quest_info : ScriptableObject
     {
         public string information;
         public int type;     //대화 0, 사냥 1, 수집 2 
-        public int require_id;
+        public int require_id;      //대화할, 잡을, 수집할 아이템ID
         public int amount;      //클리어하기 위한 수
     }
     //다중 퀘스트(하나의 퀘스트에 여러 명령) 관리를 위한 구분

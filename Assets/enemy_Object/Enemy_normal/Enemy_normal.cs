@@ -28,21 +28,25 @@ public class Enemy_normal : MonoBehaviour
     public GameObject Player;
 
 
-    private void Start()
+    public void Start()
     {
-        HP = info.Max_HP;
+        normal_setting();
+    }
+
+    public virtual void normal_setting()
+    {
+        HP = info.Max_HP;                       
         MP = info.Max_MP;
-        speed = info.speed;    
+        speed = info.speed;
         attack_speed = info.attack_speed;       //2가 최고 공속
 
         HP_bar = transform.GetChild(1).Find("HPbar");         //HP바 받아오기;
 
-        Player = GameObject.FindWithTag("Player");
-        StartCoroutine("random_act");
+        Player = GameObject.FindWithTag("Player");             //플레이어 받아오기
+        StartCoroutine(before_found_act());                          
 
         transform.GetChild(1).Find("name").GetComponent<TextMeshProUGUI>().text = info.Name;     //이름 표시
         GetComponent<SpriteRenderer>().sprite = info.Image;
-        
     }
 
     public void FixedUpdate()
@@ -69,19 +73,19 @@ public class Enemy_normal : MonoBehaviour
 
 
 
-    public void founding()      //플레이어 찾기
+    public virtual void founding()      //플레이어 찾기
     {
         if(Vector2.Distance(Player.transform.position, transform.position) <= info.view)        //플레이어가 시야보다 가까히 있으면
         {
             founded = true;                 //찾음
-            StartCoroutine("attack_move");      //공격개시
+            StartCoroutine(attack_move());      //공격개시
         }
     }
 
 
 
 
-    public void reward_drop()       //보상 떨구기
+    public virtual void reward_drop()       //보상 떨구기
     {
         if(info.rewards.Count > 0)
         {
@@ -92,14 +96,7 @@ public class Enemy_normal : MonoBehaviour
 
 
 
-
-
-
-
-
-    
-
-    public IEnumerator random_act()             //랜덤으로 움직임
+    public virtual IEnumerator before_found_act()             //랜덤으로 움직임
     {
         while (!founded)
         {
@@ -117,7 +114,7 @@ public class Enemy_normal : MonoBehaviour
         }    
     }
 
-    public IEnumerator attack_move()        //공격 움직임  ,, 여기를 나중에 분해(각자의 공격방식과 연관)
+    public virtual IEnumerator attack_move()        //공격 움직임  ,, 여기를 나중에 분해(각자의 공격방식과 연관)
     {
         while(founded)
         {
