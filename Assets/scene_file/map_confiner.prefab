@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 794217261582206229}
   - component: {fileID: 4912017745510636264}
   m_Layer: 0
-  m_Name: Game_mapinst
+  m_Name: map_confiner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

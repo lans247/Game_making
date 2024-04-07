@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class enemy_shooter : Enemy_normal       //일반 에네미의 컨트롤을 상속
+public class Enemy_shooter : Enemy_normal       //일반 에네미의 컨트롤을 상속
 {
     public GameObject bullet;
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override IEnumerator attack_move()            //enemy_normal에 있는 attack_move를 뒤집 씌우기
     {

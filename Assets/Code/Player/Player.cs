@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Animator animator;       //플레이어 애니메이션
 
     public string now_map;
-    public float[] map_range = new float[4]; //-x, x, -y, x
+    //public float[] map_range = new float[4]; //-x, x, -y, x 카메라 범위
 
     public int rolldelay;
     public bool rolling = false;

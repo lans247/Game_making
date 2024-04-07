@@ -36,7 +36,7 @@ public class portal : MonoBehaviour
             {
                 transfer = true;
                 collision.GetComponent<Player>().now_map = map.map_name;        //맵 이름 입력
-                collision.GetComponent<Player>().map_range = map.map_range;     //맵 범위
+                //collision.GetComponent<Player>().map_range = map.map_range;     //맵 범위
                 UI.GetComponent<UI>().map_allert();                                 //맵 이름 띄우기
                 UI.GetComponent<UI>().fade_action(transfer_scene, new_position);  //화면전환, UI에서 시행
             } 

@@ -13,10 +13,6 @@ MonoBehaviour:
   m_Name: broken_kingdom-2
   m_EditorClassIdentifier: 
   map_name: broken_kingdom-2
-  map_range:
-  - -7
-  - -7
-  - -4
-  - 4
-  type: 
-  clear: 0
+  type: 84
+  clear: 1
+  enemy_num: 0

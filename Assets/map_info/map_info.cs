@@ -6,9 +6,8 @@ using UnityEngine.Tilemaps;
 public class map_info : ScriptableObject
 {
     public string map_name;
-    public float[] map_range = new float[4]; //-x, x, -y, x
 
-    public string type;
+    public char type;               //T:마을, D:던전 Q:퀘스트 특별 구역
     public bool clear;
-
+    public int enemy_num;
 }

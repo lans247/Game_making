@@ -13,8 +13,7 @@ public class Enemy_normal : MonoBehaviour
 
     public Enemy_info info; //불러올 에네미 정보, 불변
 
-
-    public int HP;          //변하는 정보
+    public int HP;          //변하는 정보, 개인 값, 인포의 값을 불러어 덮어쒸움
     public int MP;
     public Transform HP_bar;
     public float speed;
@@ -25,15 +24,16 @@ public class Enemy_normal : MonoBehaviour
 
     public bool founded = false; //적(주인공)을 찾았는가?
 
-    public GameObject Player;
+    public GameObject Player;   //플레이어 찾기
 
+    public map_info Place;       //적이 존재하고 있는 맵 정보
 
     public void Start()
     {
         normal_setting();
     }
 
-    public virtual void normal_setting()
+    public virtual void normal_setting()                    //기본 캐릭터 세팅
     {
         HP = info.Max_HP;                       
         MP = info.Max_MP;
@@ -55,15 +55,15 @@ public class Enemy_normal : MonoBehaviour
 
 
 
-        if (!founded) { founding(); }   //못찾으면 찾기
+        if (!founded) { founding(); }   //플레이어가 범위에 없으면 찾기
         
-
 
         if (HP <= 0) //체력 없으면 사망
         {
             reward_drop();      //보상드랍
 
-            Player.GetComponent<Quest_manager>().update_progress(1, info.ID);       //퀘스트 조건 충족 -> 넘김
+            Player.GetComponent<Quest_manager>().update_progress(1, info.ID);                    //퀘스트 조건 충족 -> 넘김
+            GameObject.Find("Map_manager").GetComponent<Map_manager>().enemy_died(Place);       //맵 매니저에게 맵에 있는 에너미 사망을 보고
 
             Destroy(this.gameObject); 
         }      
@@ -73,7 +73,7 @@ public class Enemy_normal : MonoBehaviour
 
 
 
-    public virtual void founding()      //플레이어 찾기
+    public virtual void founding()      //플레이어 찾기, 일반적으로 시야, 보스는 같은 맵
     {
         if(Vector2.Distance(Player.transform.position, transform.position) <= info.view)        //플레이어가 시야보다 가까히 있으면
         {
@@ -96,7 +96,7 @@ public class Enemy_normal : MonoBehaviour
 
 
 
-    public virtual IEnumerator before_found_act()             //랜덤으로 움직임
+    public virtual IEnumerator before_found_act()             //플레이어 찾기 전의 행동
     {
         while (!founded)
         {
