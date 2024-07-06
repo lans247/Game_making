@@ -13,17 +13,20 @@ public class UI : MonoBehaviour
 {
     public GameObject fade; //fade in out을 위한 객체
     public GameObject notice; //맵 표시를 위한 객체
-
-
-    public bool BOSS = false;       //보스 있는지 체크
+    
     public GameObject BOSS_UI;      //보스 UI
+    public bool BOSS = false;       //보스 있는지 체크
 
     public GameObject talk_UI;      //talk_ui
     public bool isTalking = false;  //토킹 체크
 
     public GameObject player;
 
-    
+    public GameObject Map_UI;          //미니맵
+    public bool Map_open = false;       //미니맵 체크
+
+    public GameObject Camera;
+
 
     public List<Item_info> item;        //아이템 정보가 저장되는 리스트
     
@@ -67,6 +70,10 @@ public class UI : MonoBehaviour
         BOSS_UI = transform.Find("BOSS").gameObject;
         talk_UI = transform.Find("talk_ui").gameObject;
         Skill_UI = transform.Find("Skill").gameObject;
+        Map_UI = transform.Find("Map").gameObject;
+
+        Camera = GameObject.Find("Main Camera");        //카메라 가져오기
+
     }
 
 
@@ -80,35 +87,49 @@ public class UI : MonoBehaviour
             inventory.SetActive(inven_open);
         }
 
-        if (item.Count > inven_have) //만약에 관측되는 아이템 갯수가 표시 중인 것보다 많다면
-        {
-            bag_manage();
-        }
-
 
         BOSS_UI.SetActive(BOSS);
         talk_UI.SetActive(isTalking);
 
-        skill_manage();
+        skill_manage();         //스킬 관리
 
+        if(Map_open && Input.GetKeyDown(KeyCode.M)) {
+            Map_open = false;
+            minimap_close();
+        }
+        else if (!Map_open && Input.GetKeyDown(KeyCode.M))
+        {
+            Map_open = true;
+            minimap_open();
+        }
+    }
+
+    public void minimap_close() {
+        Camera.transform.GetChild(0).GetComponent<Camera>().orthographicSize = 15;          //미니맵 카메라의 시야각 조절.
+
+        Map_UI.GetComponent<RectTransform>().anchoredPosition = new Vector2(800, -400);
+        Map_UI.GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+
+        Map_UI.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+    }
+    public void minimap_open(){
+        Camera.transform.GetChild(0).GetComponent<Camera>().orthographicSize = 60;
+
+
+        Map_UI.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 0);
+        Map_UI.GetComponent<RectTransform>().sizeDelta = new Vector2(600, 600);
+
+        Map_UI.transform.GetChild(0).GetComponent<RectTransform>().sizeDelta = new Vector2(600, 600);
     }
 
 
 
-
-
-    public void bag_manage()
+    public void UI_inven_add(int n)
     {
-        GameObject nw = Instantiate(item_image_frame);
-        nw.GetComponent<UnityEngine.UI.Image>().sprite = item[inven_have].image;
-        nw.transform.parent = inventory.transform.GetChild(0).GetChild(0);
-        inven_have++;
-
+        GameObject nw = Instantiate(item_image_frame);                                      //새로운 아이템 오브젝트를 만들어서
+        nw.GetComponent<UnityEngine.UI.Image>().sprite = item[n].image;            //정보를 입력하고. 
+        nw.transform.parent = inventory.transform.GetChild(0).GetChild(0);                  //그 오브젝트를 inventory에 자식으로 넣기.
     }
-
-
-
-
 
 
 
@@ -117,7 +138,7 @@ public class UI : MonoBehaviour
     {
         for(int i =0;i<5;i++)
         {
-            if (equips[i] != null)
+            if (equips[i] != null)          //착용되어있다면, 스킬 이미지 오브젝트를 활성화. 
             {
                 Skill_UI.transform.GetChild(i).gameObject.SetActive(true);
                 Skill_UI.transform.GetChild(i).GetComponent<Image>().sprite = equips[i].imagine;

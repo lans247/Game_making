@@ -6,12 +6,11 @@ using UnityEngine;
 public class tutorial : MonoBehaviour
 {
     public string Name;             //이름
-    public Vector2 posi;
 
     public TextMeshProUGUI talk_UI;         //이야기 유아이
     public bool talking = false;            //이야기 중
 
-    public string sentence;
+    public string sentence;                 //읽을 문장.
 
     public GameObject Player;
     public GameObject Scarecrow;
@@ -84,29 +83,14 @@ public class tutorial : MonoBehaviour
         GameObject.Find("UI").GetComponent<UI>().isTalking = true;
         yield return StartCoroutine(talk_sentence("굿"));
         yield return new WaitUntil(() => Input.anyKey);
-        yield return StartCoroutine(talk_sentence(""));
+        yield return StartCoroutine(talk_sentence("이제 가서 슬라임을 잡아와라."));
         yield return new WaitUntil(() => Input.anyKey);
-        yield return StartCoroutine(talk_sentence("."));
+        yield return StartCoroutine(talk_sentence("5마리 정도면 적당하겠지."));
         yield return new WaitUntil(() => Input.anyKey);
+
+        this.gameObject.GetComponent<Quest_giver>().Give();
         GameObject.Find("UI").GetComponent<UI>().isTalking = false;
         Player.GetComponent<Player>().can_move = true;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 
@@ -117,7 +101,7 @@ public class tutorial : MonoBehaviour
         for (int i = 0; i < c.Length; i++)
         {
             talk_UI.text += c[i].ToString();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.05f);
         }
         yield return null;
     }

@@ -21,7 +21,7 @@ public class Map_manager : MonoBehaviour
             {
                 case 'D':
                     management_map[i].clear = false;        //던전의 경우 시작할 때 클리어 여부를 false로 시작
-                    management_map_enemy_num[i] = management_map[i].enemy_num;         
+                    management_map_enemy_num[i] = management_map[i].enemy_num;              //맵이 가지고 있는 적의 정보를 받아서 저장.
                     break;
                 case 'T':
                     management_map[i].clear = true;
@@ -35,9 +35,9 @@ public class Map_manager : MonoBehaviour
     public void enemy_died(map_info info)      //적이 죽으면 맵에 있는 적의 수를 감소 시킴, enemy_normal에서 호출
     {
         int i;
-        for(i =0;i<management_map.Capacity;i++)
+        for(i = 0;i < management_map.Capacity;i++)
         {
-            if(info == management_map[i])
+            if(info == management_map[i])               //신호가 들어온 맵의 적 수 감소.
             {
                 management_map_enemy_num[i] -= 1;
                 break;
@@ -49,8 +49,4 @@ public class Map_manager : MonoBehaviour
             management_map[i].clear = true;             //클리어 처리.
         }
     }
-
-
-    
-
 }

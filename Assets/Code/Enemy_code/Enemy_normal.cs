@@ -30,10 +30,10 @@ public class Enemy_normal : MonoBehaviour
 
     public void Start()
     {
-        normal_setting();
+        initial_setting();
     }
 
-    public virtual void normal_setting()                    //기본 캐릭터 세팅
+    public virtual void initial_setting()                    //기본 캐릭터 세팅
     {
         HP = info.Max_HP;                       
         MP = info.Max_MP;
@@ -51,26 +51,30 @@ public class Enemy_normal : MonoBehaviour
 
     public void FixedUpdate()
     {
-        HP_bar.GetComponent<UnityEngine.UI.Image>().fillAmount = HP * 1.0f / info.Max_HP; //체력감소 표시
-
-
+        if(founded)   HP_bar_indicate();        //찾은 이후에 HP바 보이기
 
         if (!founded) { founding(); }   //플레이어가 범위에 없으면 찾기
-        
 
-        if (HP <= 0) //체력 없으면 사망
-        {
-            reward_drop();      //보상드랍
 
-            Player.GetComponent<Quest_manager>().update_progress(1, info.ID);                    //퀘스트 조건 충족 -> 넘김
-            GameObject.Find("Map_manager").GetComponent<Map_manager>().enemy_died(Place);       //맵 매니저에게 맵에 있는 에너미 사망을 보고
+        if (HP <= 0) died(); //체력 없으면 사망
+         
+    }
 
-            Destroy(this.gameObject); 
-        }      
+    public virtual void died()          //에네미 사망
+    {
+        reward_drop();      //보상드랍
 
+        Player.GetComponent<Quest_manager>().update_progress(1, info.ID);                    //퀘스트 조건 충족 -> 넘김
+        GameObject.Find("Map_manager").GetComponent<Map_manager>().enemy_died(Place);       //맵 매니저에게 맵에 있는 에너미 사망을 보고
+
+        Destroy(this.gameObject);
     }
 
 
+    public virtual void HP_bar_indicate()
+    {
+        HP_bar.GetComponent<UnityEngine.UI.Image>().fillAmount = HP * 1.0f / info.Max_HP; //체력감소 표시
+    }
 
 
     public virtual void founding()      //플레이어 찾기, 일반적으로 시야, 보스는 같은 맵
@@ -81,8 +85,6 @@ public class Enemy_normal : MonoBehaviour
             StartCoroutine(attack_move());      //공격개시
         }
     }
-
-
 
 
     public virtual void reward_drop()       //보상 떨구기
@@ -127,7 +129,7 @@ public class Enemy_normal : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)              //플레이어와 추돌시
+    public virtual void OnCollisionEnter2D(Collision2D collision)              //플레이어와 추돌시
     {
         if (collision.collider.CompareTag("Player"))
         {

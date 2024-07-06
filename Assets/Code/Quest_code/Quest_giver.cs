@@ -1,22 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.Archive;
 using UnityEngine;
 
 public class Quest_giver : MonoBehaviour
 {
-    public Quest_info a;
-    public int[] quests = new int[4];
-
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public List<Quest_info> give_quest;
+    public GameObject Player;
+    public int give_num = 0;
+    public void Start(){
+        Player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
-    void Update()
+
+    public void Give()
     {
-        
+        Player.GetComponent<Quest_manager>().Now_quests.Add(give_quest[give_num]);         //퀘스트 주기
+        give_num++;                                                                        //더 있으면 더 줌.
     }
 }

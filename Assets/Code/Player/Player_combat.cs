@@ -15,6 +15,7 @@ public class Player_combat : MonoBehaviour
     public List<int> Personality = new List<int>();     //성격
 
     //실제 적용 스텟
+    [Header("Player stats")]
     public int Max_HP;
     public int HP;
     public int Max_MP;
@@ -25,6 +26,7 @@ public class Player_combat : MonoBehaviour
     public int recover_info;            //재생 수치, 기본 1
 
     //기본 스텟
+    [Header("normal stats")]
     public int normal_Max_HP = 100;
     public int normal_Max_MP = 100;
     public int normal_def = 0;
@@ -33,6 +35,7 @@ public class Player_combat : MonoBehaviour
     public int normal_recover_info;
 
     //버프 스텟
+    [Header("buff stats")]
     public int buff_Max_HP;
     public int buff_Max_MP;
     public int buff_def;
@@ -129,15 +132,11 @@ public class Player_combat : MonoBehaviour
 
         Personality_setting();      //성격에 따른 변화
 
+        //스킬 관리
         skill_manage();
-
-
 
         //버프 체크
         stat_manage();
-
-
-
     }
 
     void Update()
@@ -243,7 +242,6 @@ public class Player_combat : MonoBehaviour
      * skill_info에는 id와 이름, 쿨타임을 넣고.
      * skill를 사용하면 UI에서 쿨타임을 계산하고, skill manage에서 스킬을 발동
      */
-
 
     void skill_manage()
     {

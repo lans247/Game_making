@@ -16,7 +16,7 @@ public class item_normal : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            collision.GetComponent<item_manager>().bag.Add(item);
+            collision.GetComponent<item_manager>().get_item(item);
             Destroy(this.gameObject);
         }
     }

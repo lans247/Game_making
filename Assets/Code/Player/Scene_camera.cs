@@ -13,13 +13,13 @@ public class Scene_camera : MonoBehaviour
     private void Awake()
     {
         player = GameObject.Find("Player").transform;
-        map_confiner = GameObject.Find("map_confiner").GetComponent<PolygonCollider2D>();
+        map_confiner = GameObject.Find("map_confiner").GetComponent<PolygonCollider2D>();       //맵 제한자.
     }
     void Start()
     {
-        GetComponent<CinemachineVirtualCamera>().Follow = player;
-        GetComponent<CinemachineVirtualCamera>().LookAt = player;
+        GetComponent<CinemachineVirtualCamera>().Follow = player;                               //플레이어 따라다니고
+        GetComponent<CinemachineVirtualCamera>().LookAt = player;                               //플레이어를 바라봄
 
-        GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = map_confiner;
+        GetComponent<CinemachineConfiner2D>().m_BoundingShape2D = map_confiner;     
     }
 }
